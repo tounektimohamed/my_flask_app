@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_file, render_template
+from flask_cors import CORS
 import json
 import pyproj
 from shapely.geometry import shape, mapping
@@ -6,6 +7,7 @@ from shapely.ops import transform
 import os
 
 app = Flask(__name__)
+CORS(app)  # Permet toutes les origines par défaut
 
 @app.route('/')
 def index():
