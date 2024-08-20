@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/convert.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "50mb" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/convert",
+      "dest": "api/convert.py"
+    },
+    {
+      "src": "/download/(.*)",
+      "dest": "api/convert.py"
+    }
+  ]
+}
+
