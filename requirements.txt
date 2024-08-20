@@ -1,33 +1,32 @@
 attrs==23.2.0
 Babel==2.10.3
-bcc==0.29.1
+bcc==0.1.10
 blinker==1.7.0
-Brlapi==0.8.5
+# Brlapi==0.8.5
 certifi==2023.11.17
 chardet==5.2.0
 click==8.1.6
-cloud-init==24.1.3
+# cloud-init==24.1.3
 colorama==0.4.6
-command-not-found==0.3
+# command-not-found==0.3
 configobj==5.0.8
 cryptography==41.0.7
-cupshelpers==1.0
-dbus-python==1.3.2
-defer==1.0.6
+# cupshelpers==1.0
+defer==1.0.4
 distro==1.9.0
-distro-info==1.7+build1
-gyp==0.1
+distro-info==1.0
+# gyp==0.1.0
 httplib2==0.20.4
 idna==3.6
 Jinja2==3.1.2
 jsonpatch==1.32
 jsonpointer==2.0
 jsonschema==4.10.3
-language-selector==0.1
+# language-selector==0.1
 launchpadlib==1.11.0
 lazr.restfulclient==0.14.6
 lazr.uri==1.0.6
-louis==3.29.0
+# louis==3.29.0
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mdurl==0.1.2
@@ -46,9 +45,8 @@ PyJWT==2.7.0
 pyparsing==3.1.1
 pyrsistent==0.20.0
 pyserial==3.5
-python-apt==2.7.7+ubuntu1
+# python-apt==2.7.7+ubuntu1
 python-dateutil==2.8.2
-python-debian==0.1.49+ubuntu2
 pytz==2024.1
 pyxdg==0.28
 PyYAML==6.0.1
@@ -68,3 +66,4 @@ wadllib==1.3.6
 wheel==0.42.0
 xdg==5
 xkit==0.0.0
+gunicorn
