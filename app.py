@@ -12,40 +12,43 @@ CORS(app)  # Permet toutes les origines par défaut
 @app.route('/')
 def index():
     return render_template('index.html')
-
 @app.route('/convert', methods=['POST'])
 def convert_geojson():
     if 'file' not in request.files:
+        app.logger.error("No file provided")
         return jsonify({"error": "No file provided"}), 400
 
     file = request.files['file']
     if file.filename == '':
+        app.logger.error("No file selected")
         return jsonify({"error": "No file selected"}), 400
 
-    # Load the uploaded GeoJSON file
     try:
         geojson_data = json.load(file)
     except json.JSONDecodeError:
+        app.logger.error("Invalid GeoJSON format")
         return jsonify({"error": "Invalid GeoJSON format"}), 400
 
-    # Define projections (example for UTM zone 33N)
+    # Define projections
     utm_proj = pyproj.CRS('EPSG:22332')
     wgs84_proj = pyproj.CRS('EPSG:4326')
-
-    # Transform coordinates
     project = pyproj.Transformer.from_crs(utm_proj, wgs84_proj, always_xy=True).transform
 
-    for feature in geojson_data.get('features', []):
-        geom = shape(feature['geometry'])
-        geom_wgs84 = transform(project, geom)
-        feature['geometry'] = mapping(geom_wgs84)
+    try:
+        for feature in geojson_data.get('features', []):
+            geom = shape(feature['geometry'])
+            geom_wgs84 = transform(project, geom)
+            feature['geometry'] = mapping(geom_wgs84)
+    except Exception as e:
+        app.logger.error(f"Error processing GeoJSON: {e}")
+        return jsonify({"error": "Error processing GeoJSON"}), 500
 
-    # Save the converted GeoJSON file
     save_path = os.path.join('/tmp', 'converted.geojson')
     try:
         with open(save_path, 'w') as f:
             json.dump(geojson_data, f, indent=4)
     except IOError:
+        app.logger.error("Failed to save the converted file")
         return jsonify({"error": "Failed to save the converted file"}), 500
 
     return jsonify({"message": "Conversion complete", "download_url": f"/download/converted.geojson"}), 200
